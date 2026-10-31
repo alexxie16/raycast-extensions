@@ -9,6 +9,7 @@ export default function Command() {
     isLoading,
     data: prices,
     error,
+    revalidate,
   } = usePromise(fetchPrices, [], { execute: true });
 
   if (isLoading) {
@@ -24,6 +25,11 @@ export default function Command() {
             <Action.OpenInBrowser
               title="Open Mempool.space"
               url="https://mempool.space"
+            />
+            <Action
+              icon={Icon.RotateClockwise}
+              title="Refresh Price"
+              onAction={revalidate}
             />
           </ActionPanel>
         }
@@ -59,7 +65,7 @@ _Last updated: ${priceTime}_
       actions={
         <ActionPanel>
           <Action.CopyToClipboard
-            title="Copy Usd Price"
+            title="Copy Price in USD"
             content={String(priceUsd)}
             shortcut={{ modifiers: ["cmd", "shift"], key: "u" }}
           />
@@ -72,6 +78,11 @@ _Last updated: ${priceTime}_
             title="Open on Mempool.space"
             url="https://mempool.space"
             icon={Icon.Globe}
+          />
+          <Action
+            icon={Icon.RotateClockwise}
+            title="Refresh Price"
+            onAction={revalidate}
           />
         </ActionPanel>
       }
